@@ -14,6 +14,12 @@ export const breakpoints = {
     desktop: '1200px',
 };
 
+export const Container = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+`;
+
 export const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -75,6 +81,11 @@ export const ModalCloseButton = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: ${colors.secondary};
+  }
 `;
 
 export const ModalImage = styled.img`
@@ -95,6 +106,7 @@ export const ModalText = styled.p`
 export const ModalLink = styled.a`
   color: ${colors.primary};
   text-decoration: underline;
+  cursor: pointer;
 
   &:hover {
     color: ${colors.secondary};
@@ -116,9 +128,110 @@ export const PaginationButton = styled.button`
   cursor: pointer;
   border: none;
   border-radius: 5px;
+  transition: background-color 0.3s;
 
   &:disabled {
     background-color: #bdc3c7;
     cursor: not-allowed;
+  }
+
+  &:hover:enabled {
+    background-color: ${colors.secondary};
+  }
+`;
+
+// Additional styles for AuthContainer, AuthButton, HeaderButton
+
+export const AuthContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const AuthButton = styled.button`
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+`;
+
+export const HeaderButton = styled.span`
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  margin-left: 10px;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+`;
+
+// Additional styles for FormContainer, SubmitButton, BackButton
+
+export const FormContainer = styled.div`
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  background-color: ${colors.background};
+  border: 1px solid ${colors.primary};
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    margin-bottom: 20px;
+    color: ${colors.primary};
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  label {
+    margin-bottom: 10px;
+    color: ${colors.text};
+  }
+
+  input {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid ${colors.primary};
+    border-radius: 5px;
+  }
+`;
+
+export const SubmitButton = styled.button`
+  padding: 8px;
+  background-color: ${colors.primary};
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: ${colors.secondary};
+  }
+`;
+
+export const BackButton = styled.button`
+  margin-top: 10px;
+  padding: 8px;
+  background-color: ${colors.primary};
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: ${colors.secondary};
   }
 `;
