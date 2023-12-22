@@ -24,6 +24,10 @@ const Header = ({ user }) => {
         }
     };
 
+    const handleCreatePageItem = () => {
+        router.push('/create-page-item');
+    };
+
     return (
         <Container>
             <header style={{ backgroundColor: '#859ddb', padding: '10px' }}>
@@ -32,9 +36,7 @@ const Header = ({ user }) => {
                         <HeaderButton>Home</HeaderButton>
                     </Link>
                     {isLoggedIn && (
-                        <Link href="/create-page-item">
-                            <HeaderButton>Create Page Item</HeaderButton>
-                        </Link>
+                        <HeaderButton onClick={handleCreatePageItem}>Create Page Item</HeaderButton>
                     )}
                 </nav>
                 {!isLoggedIn ? (
