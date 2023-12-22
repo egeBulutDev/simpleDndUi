@@ -12,7 +12,9 @@ const Register = () => {
 
     const handleRegister = async () => {
         try {
-            await axios.post('/api/register', { name, email, password }); // Update to use 'name' instead of 'username'
+            const response= await axios.post('/api/register', { name, email, password }); // Update to use 'name' instead of 'username'
+            localStorage.setItem('user', JSON.stringify(response.data.user));
+            localStorage.setItem('isLoggedIn', 'true'); // Set isLoggedIn to true
             router.push('/');
         } catch (error) {
             console.error('Register error', error.response.data);

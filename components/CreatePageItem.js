@@ -14,7 +14,7 @@ const CreatePageItem = () => {
 
     const handleCreatePageItem = async () => {
         try {
-            await axios.post('/api/create-page-item', { title, content, page_action_link: pageActionLink, page_hero_image: pageHeroImage, author });
+            await axios.post('/api/page-items', { title, content, page_action_link: pageActionLink, page_hero_image: pageHeroImage, author });
             router.push('/');
         } catch (error) {
             console.error('Create Page Item error', error.response.data);

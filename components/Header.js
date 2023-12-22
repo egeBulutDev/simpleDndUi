@@ -7,7 +7,12 @@ import { Container, AuthContainer, AuthButton, HeaderButton } from '../styles/st
 
 const Header = ({ user }) => {
     const router = useRouter();
-    const isLoggedIn = !!user;
+
+    // Check if window and localStorage are defined (client-side)
+    const isLoggedIn =
+        typeof window !== 'undefined' &&
+        typeof window.localStorage !== 'undefined' &&
+        window.localStorage.getItem('isLoggedIn') === 'true';
 
     const handleLogin = () => {
         router.push('/login');
@@ -16,8 +21,8 @@ const Header = ({ user }) => {
     const handleLogout = async () => {
         try {
             await axios.post('/api/logout');
-            // Clear user data from local storage
             localStorage.removeItem('user');
+            localStorage.removeItem('isLoggedIn'); // Remove isLoggedIn on logout
             router.push('/');
         } catch (error) {
             console.error('Logout error:', error);

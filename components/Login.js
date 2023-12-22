@@ -13,6 +13,7 @@ const Login = () => {
         try {
             const response = await axios.post('/api/login', { email, password });
             localStorage.setItem('user', JSON.stringify(response.data.user));
+            localStorage.setItem('isLoggedIn', 'true'); // Set isLoggedIn to true
             router.push('/');
         } catch (error) {
             console.error('Login error', error.response.data);
