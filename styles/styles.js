@@ -276,18 +276,21 @@ export const ListContainerWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* Align content at the top */
   height: 100vh;
 `;
+
+
 
 export const StyledPageItemList = styled(ListContainer)`
   list-style: none;
   padding: 0;
   text-align: center;
   max-width: 800px;
-  margin-top: 20px; /* Add margin to separate from header */
-  margin-bottom: 20px; /* Add margin to center within the screen */
+  margin: 20px auto 20px auto; /* Center the title and add margin at the top */
 `;
+
+
 
 
 
