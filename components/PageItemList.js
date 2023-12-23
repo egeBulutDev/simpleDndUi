@@ -79,8 +79,6 @@ const PageItemList = () => {
                                         >
                                             <PageItem item={item} provided={provided} />
                                             <ButtonContainer>
-                                                {/* Add Edit and Delete buttons here */}
-
                                                 <EditButton>Edit</EditButton>
                                                 <DeleteButton>Delete</DeleteButton>
                                             </ButtonContainer>

@@ -37,9 +37,6 @@ const Header = ({ user }) => {
         <Container>
             <header style={{ backgroundColor: '#859ddb', padding: '10px' }}>
                 <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'white' }}>
-                    <Link href="/">
-                        <HeaderButton>Home</HeaderButton>
-                    </Link>
                     {isLoggedIn && (
                         <HeaderButton onClick={handleCreatePageItem}>Create Page Item</HeaderButton>
                     )}
@@ -47,9 +44,6 @@ const Header = ({ user }) => {
                 {!isLoggedIn ? (
                     <AuthContainer>
                         <AuthButton onClick={handleLogin}>Login</AuthButton>
-                        <Link href="/register">
-                            <AuthButton>Register</AuthButton>
-                        </Link>
                     </AuthContainer>
                 ) : (
                     <AuthButton onClick={handleLogout}>Logout</AuthButton>
