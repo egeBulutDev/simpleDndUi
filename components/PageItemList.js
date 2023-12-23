@@ -25,6 +25,12 @@ const PageItemList = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [selectedItem, setSelectedItem] = useState(null);
 
+
+    const isLoggedIn =
+        typeof window !== 'undefined' &&
+        typeof window.localStorage !== 'undefined' &&
+        window.localStorage.getItem('isLoggedIn') === 'true';
+
     const fetchPageItems = async (page) => {
         try {
             const response = await axios.get(`/api/page-items?page=${page}`);
@@ -62,6 +68,7 @@ const PageItemList = () => {
         fetchPageItems(currentPage);
     }, [currentPage]);
 
+  
     return (
         <ListContainerWrapper>
             <DragDropContext onDragEnd={onDragEnd}>
@@ -77,11 +84,13 @@ const PageItemList = () => {
                                             {...provided.dragHandleProps}
                                             onClick={() => openModal(item)}
                                         >
-                                            <PageItem item={item} provided={provided} />
+                                            {item.title.charAt(0)}{' '}
+                                            {isLoggedIn && (
                                             <ButtonContainer>
                                                 <EditButton>Edit</EditButton>
                                                 <DeleteButton>Delete</DeleteButton>
                                             </ButtonContainer>
+                                                )}
                                         </StyledListItem>
                                     )}
                                 </Draggable>

@@ -9,11 +9,6 @@ export const colors = {
     background: '#ecf0f1',
 };
 
-export const breakpoints = {
-    tablet: '768px',
-    desktop: '1200px',
-};
-
 export const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
@@ -37,8 +32,8 @@ export const ListItem = styled.li`
   width: 200px;
   border-radius: 8px;
   transition: background-color 0.3s;
-  position: relative; /* Add this line */
-  z-index: 1; /* Add this line */
+  position: relative;
+  z-index: 1;
 
   &:hover {
     background-color: ${colors.secondary};
@@ -47,42 +42,8 @@ export const ListItem = styled.li`
 
 export const ButtonContainer = styled.div`
   display: flex;
-  justify-content: flex-end;
-  margin-top: 10px; /* Add this line */
-`;
-
-
-
-export const GridContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
   justify-content: center;
-  align-items: center;
-  border: 2px solid ${colors.primary};
-  padding: 20px;
-  max-width: 800px;
-  margin: auto;
-`;
-
-export const GridItem = styled.button`
-  position: relative;
-  border: 2px solid ${colors.primary};
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: ${colors.secondary};
-  }
-`;
-
-export const Symbol = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 16px;
-  color: ${colors.text};
+  margin-top: 10px; /* Add this line */
 `;
 
 export const CustomModal = styled(Modal)`
@@ -146,13 +107,6 @@ export const ModalLink = styled.a`
   }
 `;
 
-export const PaginationContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-`;
-
 export const PaginationButton = styled.button`
   background-color: ${colors.primary};
   color: white;
@@ -172,8 +126,6 @@ export const PaginationButton = styled.button`
     background-color: ${colors.secondary};
   }
 `;
-
-// Additional styles for AuthContainer, AuthButton, HeaderButton
 
 export const AuthContainer = styled.div`
   display: flex;
@@ -204,8 +156,6 @@ export const HeaderButton = styled.span`
     background-color: #f0f0f0;
   }
 `;
-
-// Additional styles for FormContainer, SubmitButton, BackButton
 
 export const FormContainer = styled.div`
   max-width: 400px;
@@ -269,31 +219,13 @@ export const BackButton = styled.button`
   }
 `;
 
-
-
-
 export const ListContainerWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* Align content at the top */
+  justify-content: flex-start;
   height: 100vh;
 `;
-
-
-
-export const StyledPageItemList = styled(ListContainer)`
-  list-style: none;
-  padding: 0;
-  text-align: center;
-  max-width: 800px;
-  margin: 20px auto 20px auto; /* Center the title and add margin at the top */
-`;
-
-
-
-
-
 
 export const EditButton = styled.button`
   padding: 8px;

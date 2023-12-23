@@ -1,6 +1,5 @@
 // components/Header.js
 import React from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import axios from '../utils/axios';
 import { Container, AuthContainer, AuthButton, HeaderButton } from '../styles/styles';
@@ -8,7 +7,6 @@ import { Container, AuthContainer, AuthButton, HeaderButton } from '../styles/st
 const Header = ({ user }) => {
     const router = useRouter();
 
-    // Check if window and localStorage are defined (client-side)
     const isLoggedIn =
         typeof window !== 'undefined' &&
         typeof window.localStorage !== 'undefined' &&
