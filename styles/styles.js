@@ -20,6 +20,39 @@ export const Container = styled.div`
   padding: 0 20px;
 `;
 
+
+export const ListContainer = styled.div`
+  list-style: none;
+  padding: 0;
+  text-align: center;
+  max-width: 800px;
+`;
+
+export const ListItem = styled.li`
+  background-color: ${colors.background};
+  border: 2px solid ${colors.primary};
+  cursor: pointer;
+  padding: 10px;
+  margin: 10px;
+  width: 200px;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+  position: relative; /* Add this line */
+  z-index: 1; /* Add this line */
+
+  &:hover {
+    background-color: ${colors.secondary};
+  }
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px; /* Add this line */
+`;
+
+
+
 export const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -233,5 +266,56 @@ export const BackButton = styled.button`
 
   &:hover {
     background-color: ${colors.secondary};
+  }
+`;
+
+
+
+
+export const ListContainerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+`;
+
+export const StyledPageItemList = styled(ListContainer)`
+  list-style: none;
+  padding: 0;
+  text-align: center;
+  max-width: 800px;
+  margin-top: 20px; /* Add margin to separate from header */
+  margin-bottom: 20px; /* Add margin to center within the screen */
+`;
+
+
+
+
+export const EditButton = styled.button`
+  padding: 8px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #2ecc71;
+  }
+`;
+
+export const DeleteButton = styled.button`
+  padding: 8px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #c0392b;
   }
 `;

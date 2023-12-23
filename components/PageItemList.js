@@ -4,18 +4,19 @@ import axios from '../utils/axios';
 import PageItem from './PageItem';
 import Pagination from './Pagination';
 import styled from 'styled-components';
-import { colors, GridItem as StyledGridItem } from '../styles/styles';
+import {
+    colors,
+    ListItem as StyledListItem,
+    ListContainer,
+    ListContainerWrapper,
+    PaginationButton, ButtonContainer, DeleteButton, EditButton,
+} from '../styles/styles';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
-const GridContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid ${colors.primary};
-  padding: 20px;
-  max-width: 800px;
-  margin: auto;
+const StyledPageItemList = styled(ListContainer)`
+  ul {
+    padding: 0;
+  }
 `;
 
 const PageItemList = () => {
@@ -47,31 +48,53 @@ const PageItemList = () => {
         setSelectedItem(null);
     };
 
+    const onDragEnd = (result) => {
+        if (!result.destination) return;
+
+        const reorderedItems = Array.from(items);
+        const [removed] = reorderedItems.splice(result.source.index, 1);
+        reorderedItems.splice(result.destination.index, 0, removed);
+
+        setItems(reorderedItems);
+    };
+
     useEffect(() => {
         fetchPageItems(currentPage);
     }, [currentPage]);
 
     return (
-        <div>
-            <GridContainer>
-                {items.map((item) => (
-                    <StyledGridItem key={item.id} onClick={() => openModal(item)}>
-                        <PageItem item={item} onClick={() => openModal(item)} />
-                    </StyledGridItem>
-                ))}
-            </GridContainer>
-            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+        <ListContainerWrapper>
+            <DragDropContext onDragEnd={onDragEnd}>
+                <Droppable droppableId="pageItems">
+                    {(provided) => (
+                        <StyledPageItemList {...provided.droppableProps} ref={provided.innerRef}>
+                            {items.map((item, index) => (
+                                <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
+                                    {(provided) => (
+                                        <StyledListItem
+                                            ref={provided.innerRef}
+                                            {...provided.draggableProps}
+                                            {...provided.dragHandleProps}
+                                            onClick={() => openModal(item)}
+                                        >
+                                            <PageItem item={item} provided={provided} />
+                                            <ButtonContainer>
+                                                {/* Add Edit and Delete buttons here */}
 
-            {/* Modal for displaying detailed item information */}
-            {selectedItem && (
-                <PageItem
-                    item={selectedItem}
-                    onClick={() => {}}
-                    showModal={true}
-                    onClose={() => closeModal()}
-                />
-            )}
-        </div>
+                                                <EditButton>Edit</EditButton>
+                                                <DeleteButton>Delete</DeleteButton>
+                                            </ButtonContainer>
+                                        </StyledListItem>
+                                    )}
+                                </Draggable>
+                            ))}
+                            {provided.placeholder}
+                        </StyledPageItemList>
+                    )}
+                </Droppable>
+            </DragDropContext>
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+        </ListContainerWrapper>
     );
 };
 

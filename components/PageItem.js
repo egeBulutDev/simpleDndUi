@@ -1,13 +1,26 @@
 // components/PageItem.js
 import React from 'react';
 import styled from 'styled-components';
-import { CustomModal, ModalContent, ModalCloseButton, ModalImage, ModalTitle, ModalText, ModalLink, colors } from '../styles/styles';
+import {
+    CustomModal,
+    ModalContent,
+    ModalCloseButton,
+    ModalImage,
+    ModalTitle,
+    ModalText,
+    ModalLink,
+    colors,
+} from '../styles/styles';
 
-const GridItem = styled.button`
+const DraggableContainer = styled.button`
   position: relative;
   border: 2px solid ${colors.primary};
-  cursor: pointer;
+  cursor: grab; /* Use "grab" cursor when not dragging */
   transition: background-color 0.3s ease;
+
+  &:active {
+    cursor: grabbing; /* Use "grabbing" cursor when dragging */
+  }
 
   &:hover {
     background-color: ${colors.secondary};
@@ -23,13 +36,17 @@ const Symbol = styled.div`
   color: ${colors.text};
 `;
 
-const PageItem = ({ item, onClick, showModal, onClose }) => {
+const PageItem = ({ item, provided }) => {
     return (
-        <GridItem onClick={() => onClick(item)} onMouseEnter={showModal ? () => {} : undefined}>
+        <DraggableContainer
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+        >
             <Symbol>{item.title.charAt(0)}</Symbol>
-            <CustomModal isOpen={showModal} onRequestClose={onClose}>
+            <CustomModal>
                 <ModalContent>
-                    <ModalCloseButton onClick={onClose}>X</ModalCloseButton>
+                    <ModalCloseButton>X</ModalCloseButton>
                     <ModalTitle>{item.title}</ModalTitle>
                     <ModalImage src={item.page_hero_image} alt={item.title} />
                     <ModalText>{item.content}</ModalText>
@@ -38,7 +55,7 @@ const PageItem = ({ item, onClick, showModal, onClose }) => {
                     </ModalLink>
                 </ModalContent>
             </CustomModal>
-        </GridItem>
+        </DraggableContainer>
     );
 };
 
