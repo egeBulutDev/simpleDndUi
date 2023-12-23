@@ -43,7 +43,7 @@ export const ListItem = styled.li`
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 10px; /* Add this line */
+  margin-top: 10px;
 `;
 
 export const CustomModal = styled(Modal)`
