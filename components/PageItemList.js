@@ -68,7 +68,17 @@ const PageItemList = () => {
         fetchPageItems(currentPage);
     }, [currentPage]);
 
-  
+    const handleDelete = async (id) => {
+        const confirmDelete = window.confirm('Are you sure you want to delete this page item?');
+        if (confirmDelete) {
+            try {
+                await axios.delete(`/api/page-items/${id}`);
+                fetchPageItems();
+            } catch (error) {
+                console.error('Error deleting news item:', error);
+            }
+        }
+    };
     return (
         <ListContainerWrapper>
             <DragDropContext onDragEnd={onDragEnd}>
@@ -88,7 +98,9 @@ const PageItemList = () => {
                                             {isLoggedIn && (
                                             <ButtonContainer>
                                                 <EditButton>Edit</EditButton>
-                                                <DeleteButton>Delete</DeleteButton>
+                                                <DeleteButton onClick={() => handleDelete(item.id)}>
+                                                    Delete
+                                                </DeleteButton>
                                             </ButtonContainer>
                                                 )}
                                         </StyledListItem>
