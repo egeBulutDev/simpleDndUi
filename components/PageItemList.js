@@ -4,6 +4,8 @@ import axios from '../utils/axios';
 import PageItem from './PageItem';
 import Pagination from './Pagination';
 import styled from 'styled-components';
+import EditPageItem from './EditPageItem'; // Import the new EditPageItem component
+
 import {
     colors,
     ListItem as StyledListItem,
@@ -24,6 +26,7 @@ const PageItemList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [selectedItem, setSelectedItem] = useState(null);
+    const [editMode, setEditMode] = useState(false); // New state for tracking edit mode
 
 
     const isLoggedIn =
@@ -52,7 +55,13 @@ const PageItemList = () => {
 
     const closeModal = () => {
         setSelectedItem(null);
+        setEditMode(false); // Close edit mode when modal is closed
     };
+
+    const handleEdit = () => {
+        setEditMode(true); // Set edit mode to true when edit button is clicked
+    };
+
 
     const onDragEnd = (result) => {
         if (!result.destination) return;
@@ -81,6 +90,13 @@ const PageItemList = () => {
     };
     return (
         <ListContainerWrapper>
+            {editMode ? ( // Display EditPageItem component when edit mode is true
+                <EditPageItem
+                    selectedItem={selectedItem}
+                    closeModal={closeModal}
+                    fetchPageItems={fetchPageItems}
+                />
+            ) : (
             <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable droppableId="pageItems">
                     {(provided) => (
@@ -97,7 +113,7 @@ const PageItemList = () => {
                                             {item.title.charAt(0)}{' '}
                                             {isLoggedIn && (
                                             <ButtonContainer>
-                                                <EditButton>Edit</EditButton>
+                                                <EditButton onClick={handleEdit}>Edit</EditButton>
                                                 <DeleteButton onClick={() => handleDelete(item.id)}>
                                                     Delete
                                                 </DeleteButton>
@@ -112,7 +128,7 @@ const PageItemList = () => {
                     )}
                 </Droppable>
             </DragDropContext>
-            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+            )}<Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
         </ListContainerWrapper>
     );
 };
