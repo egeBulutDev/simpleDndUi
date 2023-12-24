@@ -1,5 +1,5 @@
 // components/PageItem.js
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import {
     CustomModal,
@@ -31,29 +31,23 @@ const Symbol = styled.div`
   color: ${colors.text};
 `;
 
-const PageItem = ({ item }) => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+const PageItem = ({ item, isOpen, onClose }) => {
 
-    const openModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsModalOpen(false);
-    };
-
-    // Check if item is null or undefined before accessing its properties
     if (!item) {
-        return null; // or some fallback UI if needed
+        return null;
     }
 
     return (
-        <Container onClick={openModal}>
+        <Container>
             <Symbol>{item.title?.charAt(0)}</Symbol>
-            {isModalOpen && (
-                <CustomModal>
+            {isOpen && (
+                <CustomModal
+                    isOpen={isOpen}
+                    onRequestClose={onClose}
+                    contentLabel="Page Item Modal"
+                >
                     <ModalContent>
-                        <ModalCloseButton onClick={closeModal}>X</ModalCloseButton>
+                        <ModalCloseButton onClick={onClose}>X</ModalCloseButton>
                         <ModalTitle>{item.title}</ModalTitle>
                         <ModalImage src={item.page_hero_image} alt={item.title} />
                         <ModalText>{item.content}</ModalText>

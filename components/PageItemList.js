@@ -4,14 +4,12 @@ import axios from '../utils/axios';
 import PageItem from './PageItem';
 import Pagination from './Pagination';
 import styled from 'styled-components';
-import EditPageItem from './EditPageItem'; // Import the new EditPageItem component
+import EditPageItem from './EditPageItem';
 
 import {
-    colors,
     ListItem as StyledListItem,
-    ListContainer,
-    ListContainerWrapper,
-    PaginationButton, ButtonContainer, DeleteButton, EditButton, InspectButton,
+    ListContainer, ListContainerWrapper,
+    ButtonContainer, DeleteButton, EditButton, InspectButton,
 } from '../styles/styles';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
@@ -53,17 +51,9 @@ const PageItemList = () => {
         setSelectedItem(item);
     };
 
-    const closeModal = () => {
-        setSelectedItem(null);
-        setEditMode(false); // Close edit mode when modal is closed
-    };
-
-
-
     const handleEdit = () => {
-        setEditMode(true); // Set edit mode to true when edit button is clicked
+        setEditMode(true);
     };
-
 
     const onDragEnd = (result) => {
         if (!result.destination) return;
@@ -96,9 +86,15 @@ const PageItemList = () => {
         setIsModalOpen(true);
     };
 
+    const closeModal = () => {
+        setSelectedItem(null);
+        setIsModalOpen(false);
+        setEditMode(false);
+    };
+
     return (
         <ListContainerWrapper>
-            {editMode ? ( // Display EditPageItem component when edit mode is true
+            {editMode ? (
                 <EditPageItem
                     selectedItem={selectedItem}
                     closeModal={closeModal}
@@ -109,6 +105,7 @@ const PageItemList = () => {
                 <Droppable droppableId="pageItems">
                     {(provided) => (
                         <StyledPageItemList {...provided.droppableProps} ref={provided.innerRef}>
+
                             {items.map((item, index) => (
                                 <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
                                     {(provided) => (
@@ -116,21 +113,19 @@ const PageItemList = () => {
                                             ref={provided.innerRef}
                                             {...provided.draggableProps}
                                             {...provided.dragHandleProps}
-                                            onClick={() => openModal(item)}
                                         >
                                             {item.title.charAt(0)}{' '}
                                             <ButtonContainer>
                                                 {isLoggedIn && (
-                                                <EditButton onClick={handleEdit}>Edit</EditButton>
+                                                    <EditButton onClick={handleEdit}>Edit</EditButton>
                                                 )}
                                                 <InspectButton onClick={() => handleInspect(item)}>Inspect</InspectButton>
                                                 {isLoggedIn && (
-                                                <DeleteButton onClick={() => handleDelete(item.id)}>
-                                                    Delete
-                                                </DeleteButton>
+                                                    <DeleteButton onClick={() => handleDelete(item.id)}>
+                                                        Delete
+                                                    </DeleteButton>
                                                 )}
                                             </ButtonContainer>
-
                                         </StyledListItem>
                                     )}
                                 </Draggable>

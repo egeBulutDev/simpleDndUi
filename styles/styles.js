@@ -33,7 +33,6 @@ export const ListItem = styled.li`
   border-radius: 8px;
   transition: background-color 0.3s;
   position: relative;
-  z-index: 1;
 
   &:hover {
     background-color: ${colors.secondary};
@@ -45,12 +44,12 @@ export const CustomModal = styled(Modal)`
   display: flex;
   align-items: center;
   justify-content: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: rgba(0, 0, 0, 0.5);
+  z-index: 4;
 `;
 
 export const ModalContent = styled.div`
@@ -99,26 +98,6 @@ export const ModalLink = styled.a`
 
   &:hover {
     color: ${colors.secondary};
-  }
-`;
-
-export const PaginationButton = styled.button`
-  background-color: ${colors.primary};
-  color: white;
-  padding: 10px;
-  margin: 0 5px;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-
-  &:disabled {
-    background-color: #bdc3c7;
-    cursor: not-allowed;
-  }
-
-  &:hover:enabled {
-    background-color: ${colors.secondary};
   }
 `;
 
