@@ -11,7 +11,7 @@ import {
     ListItem as StyledListItem,
     ListContainer,
     ListContainerWrapper,
-    PaginationButton, ButtonContainer, DeleteButton, EditButton,
+    PaginationButton, ButtonContainer, DeleteButton, EditButton, InspectButton,
 } from '../styles/styles';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
@@ -27,7 +27,7 @@ const PageItemList = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [selectedItem, setSelectedItem] = useState(null);
     const [editMode, setEditMode] = useState(false); // New state for tracking edit mode
-
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const isLoggedIn =
         typeof window !== 'undefined' &&
@@ -57,6 +57,8 @@ const PageItemList = () => {
         setSelectedItem(null);
         setEditMode(false); // Close edit mode when modal is closed
     };
+
+
 
     const handleEdit = () => {
         setEditMode(true); // Set edit mode to true when edit button is clicked
@@ -88,6 +90,12 @@ const PageItemList = () => {
             }
         }
     };
+
+    const handleInspect = (item) => {
+        setSelectedItem(item);
+        setIsModalOpen(true);
+    };
+
     return (
         <ListContainerWrapper>
             {editMode ? ( // Display EditPageItem component when edit mode is true
@@ -111,14 +119,18 @@ const PageItemList = () => {
                                             onClick={() => openModal(item)}
                                         >
                                             {item.title.charAt(0)}{' '}
-                                            {isLoggedIn && (
                                             <ButtonContainer>
+                                                {isLoggedIn && (
                                                 <EditButton onClick={handleEdit}>Edit</EditButton>
+                                                )}
+                                                <InspectButton onClick={() => handleInspect(item)}>Inspect</InspectButton>
+                                                {isLoggedIn && (
                                                 <DeleteButton onClick={() => handleDelete(item.id)}>
                                                     Delete
                                                 </DeleteButton>
-                                            </ButtonContainer>
                                                 )}
+                                            </ButtonContainer>
+
                                         </StyledListItem>
                                     )}
                                 </Draggable>
@@ -129,6 +141,7 @@ const PageItemList = () => {
                 </Droppable>
             </DragDropContext>
             )}<Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+            <PageItem isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} item={selectedItem} />
         </ListContainerWrapper>
     );
 };

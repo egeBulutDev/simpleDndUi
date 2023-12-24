@@ -1,5 +1,5 @@
 // components/PageItem.js
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import {
     CustomModal,
@@ -12,15 +12,10 @@ import {
     colors,
 } from '../styles/styles';
 
-const DraggableContainer = styled.button`
+const Container = styled.div`
   position: relative;
   border: 2px solid ${colors.primary};
-  cursor: grab; /* Use "grab" cursor when not dragging */
   transition: background-color 0.3s ease;
-
-  &:active {
-    cursor: grabbing; /* Use "grabbing" cursor when dragging */
-  }
 
   &:hover {
     background-color: ${colors.secondary};
@@ -36,26 +31,39 @@ const Symbol = styled.div`
   color: ${colors.text};
 `;
 
-const PageItem = ({ item, provided }) => {
+const PageItem = ({ item }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    // Check if item is null or undefined before accessing its properties
+    if (!item) {
+        return null; // or some fallback UI if needed
+    }
+
     return (
-        <DraggableContainer
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-        >
-            <Symbol>{item.title.charAt(0)}</Symbol>
-            <CustomModal>
-                <ModalContent>
-                    <ModalCloseButton>X</ModalCloseButton>
-                    <ModalTitle>{item.title}</ModalTitle>
-                    <ModalImage src={item.page_hero_image} alt={item.title} />
-                    <ModalText>{item.content}</ModalText>
-                    <ModalLink href={item.page_action_link} target="_blank" rel="noopener noreferrer">
-                        {item.page_action_link}
-                    </ModalLink>
-                </ModalContent>
-            </CustomModal>
-        </DraggableContainer>
+        <Container onClick={openModal}>
+            <Symbol>{item.title?.charAt(0)}</Symbol>
+            {isModalOpen && (
+                <CustomModal>
+                    <ModalContent>
+                        <ModalCloseButton onClick={closeModal}>X</ModalCloseButton>
+                        <ModalTitle>{item.title}</ModalTitle>
+                        <ModalImage src={item.page_hero_image} alt={item.title} />
+                        <ModalText>{item.content}</ModalText>
+                        <ModalLink href={item.page_action_link} target="_blank" rel="noopener noreferrer">
+                            {item.page_action_link}
+                        </ModalLink>
+                    </ModalContent>
+                </CustomModal>
+            )}
+        </Container>
     );
 };
 

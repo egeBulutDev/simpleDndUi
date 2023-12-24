@@ -40,11 +40,6 @@ export const ListItem = styled.li`
   }
 `;
 
-export const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-`;
 
 export const CustomModal = styled(Modal)`
   display: flex;
@@ -227,6 +222,26 @@ export const ListContainerWrapper = styled.div`
   height: 100vh;
 `;
 
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+`;
+export const InspectButton = styled.button`
+  padding: 8px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #045ea9;
+  }
+`;
+
 export const EditButton = styled.button`
   padding: 8px;
   background-color: #3498db;
@@ -237,7 +252,7 @@ export const EditButton = styled.button`
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #2ecc71;
+    background-color: rgba(232, 210, 62, 0.97);
   }
 `;
 
