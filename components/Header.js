@@ -20,7 +20,7 @@ const Header = ({ user }) => {
         try {
             await axios.post('/api/logout');
             localStorage.removeItem('user');
-            localStorage.removeItem('isLoggedIn'); // Remove isLoggedIn on logout
+            localStorage.removeItem('isLoggedIn');
             router.push('/');
         } catch (error) {
             console.error('Logout error:', error);

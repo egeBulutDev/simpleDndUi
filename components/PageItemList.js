@@ -24,8 +24,9 @@ const PageItemList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [selectedItem, setSelectedItem] = useState(null);
-    const [editMode, setEditMode] = useState(false); // New state for tracking edit mode
+    const [editMode, setEditMode] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [itemOrder, setItemOrder] = useState([]);
 
     const isLoggedIn =
         typeof window !== 'undefined' &&
@@ -35,12 +36,14 @@ const PageItemList = () => {
     const fetchPageItems = async (page) => {
         try {
             const response = await axios.get(`/api/page-items?page=${page}`);
-            setItems(response.data.data);
+            const sortedItems = response.data.data.sort((a, b) => a.order - b.order);
+            setItems(sortedItems);
             setTotalPages(response.data.last_page);
         } catch (error) {
             console.error('Error fetching page items:', error);
         }
     };
+
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
@@ -51,9 +54,11 @@ const PageItemList = () => {
         setSelectedItem(item);
     };
 
-    const handleEdit = () => {
+    const handleEdit = (item) => {
+        setSelectedItem(item);
         setEditMode(true);
     };
+
 
     const onDragEnd = (result) => {
         if (!result.destination) return;
@@ -63,7 +68,17 @@ const PageItemList = () => {
         reorderedItems.splice(result.destination.index, 0, removed);
 
         setItems(reorderedItems);
+        setItemOrder(reorderedItems.map((item) => item.id));
     };
+
+    const handleSaveOrder = async () => {
+        try {
+            await axios.post('/api/page-items/save-order', { order: itemOrder });
+        } catch (error) {
+            console.error('Error saving item order:', error);
+        }
+    };
+
 
     useEffect(() => {
         fetchPageItems(currentPage);
@@ -94,6 +109,11 @@ const PageItemList = () => {
 
     return (
         <ListContainerWrapper>
+            {isLoggedIn && (
+                <div>
+                    <button onClick={handleSaveOrder}>Save Order</button>
+                </div>
+            )}
             {editMode && (
                 <EditPageItem
                     selectedItem={selectedItem}
@@ -102,8 +122,6 @@ const PageItemList = () => {
                 />
             )}
             {isLoggedIn && (
-
-
                 <DragDropContext onDragEnd={onDragEnd}>
                     <Droppable droppableId="pageItems">
                         {(provided) => (
@@ -158,4 +176,4 @@ const PageItemList = () => {
     );
 };
 
-export default PageItemList;
+export default PageItemList

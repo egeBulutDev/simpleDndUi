@@ -13,7 +13,8 @@ import {
 } from '../styles/styles';
 
 const EditPageItem = ({ selectedItem, closeModal, fetchPageItems }) => {
-    const [editedItem, setEditedItem] = useState({ ...selectedItem }); // Copy selected item to editedItem state
+    const [editedItem, setEditedItem] = useState(selectedItem);
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -27,7 +28,7 @@ const EditPageItem = ({ selectedItem, closeModal, fetchPageItems }) => {
         try {
             await axios.put(`/api/page-items/${selectedItem.id}`, editedItem);
             closeModal();
-            fetchPageItems(); // Fetch updated items after submitting changes
+            fetchPageItems();
         } catch (error) {
             console.error('Error updating page item:', error);
         }
