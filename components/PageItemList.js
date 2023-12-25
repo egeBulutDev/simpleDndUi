@@ -94,48 +94,65 @@ const PageItemList = () => {
 
     return (
         <ListContainerWrapper>
-            {editMode ? (
+            {editMode && (
                 <EditPageItem
                     selectedItem={selectedItem}
                     closeModal={closeModal}
                     fetchPageItems={fetchPageItems}
                 />
-            ) : (
-            <DragDropContext onDragEnd={onDragEnd}>
-                <Droppable droppableId="pageItems">
-                    {(provided) => (
-                        <StyledPageItemList {...provided.droppableProps} ref={provided.innerRef}>
+            )}
+            {isLoggedIn && (
 
-                            {items.map((item, index) => (
-                                <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
-                                    {(provided) => (
-                                        <StyledListItem
-                                            ref={provided.innerRef}
-                                            {...provided.draggableProps}
-                                            {...provided.dragHandleProps}
-                                        >
-                                            {item.title.charAt(0)}{' '}
-                                            <ButtonContainer>
-                                                {isLoggedIn && (
-                                                    <EditButton onClick={handleEdit}>Edit</EditButton>
-                                                )}
-                                                <InspectButton onClick={() => handleInspect(item)}>Inspect</InspectButton>
-                                                {isLoggedIn && (
-                                                    <DeleteButton onClick={() => handleDelete(item.id)}>
-                                                        Delete
-                                                    </DeleteButton>
-                                                )}
-                                            </ButtonContainer>
-                                        </StyledListItem>
-                                    )}
-                                </Draggable>
-                            ))}
-                            {provided.placeholder}
-                        </StyledPageItemList>
-                    )}
-                </Droppable>
-            </DragDropContext>
-            )}<Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+
+                <DragDropContext onDragEnd={onDragEnd}>
+                    <Droppable droppableId="pageItems">
+                        {(provided) => (
+                            <StyledPageItemList {...provided.droppableProps} ref={provided.innerRef}>
+                                {items.map((item, index) => (
+                                    <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
+                                        {(provided) => (
+                                            <StyledListItem
+                                                ref={provided.innerRef}
+                                                {...provided.draggableProps}
+                                                {...provided.dragHandleProps}
+                                            >
+                                                {item.title.charAt(0)}{' '}
+                                                <ButtonContainer>
+                                                    {isLoggedIn && (
+                                                        <EditButton onClick={() => handleEdit(item)}>Edit</EditButton>
+                                                    )}
+                                                    <InspectButton onClick={() => handleInspect(item)}>Inspect</InspectButton>
+                                                    {isLoggedIn && (
+                                                        <DeleteButton onClick={() => handleDelete(item.id)}>
+                                                            Delete
+                                                        </DeleteButton>
+                                                    )}
+                                                </ButtonContainer>
+                                            </StyledListItem>
+                                        )}
+                                    </Draggable>
+                                ))}
+                                {provided.placeholder}
+                            </StyledPageItemList>
+                        )}
+                    </Droppable>
+                </DragDropContext>
+            )}
+
+            {!isLoggedIn && (
+                <StyledPageItemList>
+                    {items.map((item, index) => (
+                        <StyledListItem key={item.id}>
+                            {item.title.charAt(0)}{' '}
+                            <ButtonContainer>
+                                <InspectButton onClick={() => handleInspect(item)}>Inspect</InspectButton>
+                            </ButtonContainer>
+                        </StyledListItem>
+                    ))}
+                </StyledPageItemList>
+            )}
+
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
             <PageItem isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} item={selectedItem} />
         </ListContainerWrapper>
     );

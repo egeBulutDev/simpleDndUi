@@ -57,6 +57,7 @@ export const ModalContent = styled.div`
   padding: 20px;
   border-radius: 8px;
   text-align: center;
+  z-index:2;
 `;
 
 export const ModalCloseButton = styled.button`
