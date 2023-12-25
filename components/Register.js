@@ -5,16 +5,16 @@ import { useRouter } from 'next/router';
 import { FormContainer, SubmitButton, BackButton } from '../styles/styles';
 
 const Register = () => {
-    const [name, setName] = useState(''); // Update to use 'name' instead of 'username'
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const router = useRouter();
 
     const handleRegister = async () => {
         try {
-            const response= await axios.post('/api/register', { name, email, password }); // Update to use 'name' instead of 'username'
+            const response= await axios.post('/api/register', { name, email, password });
             localStorage.setItem('user', JSON.stringify(response.data.user));
-            localStorage.setItem('isLoggedIn', 'true'); // Set isLoggedIn to true
+            localStorage.setItem('isLoggedIn', 'true');
             router.push('/');
         } catch (error) {
             console.error('Register error', error.response.data);
@@ -25,11 +25,11 @@ const Register = () => {
         <FormContainer>
             <h2>Register</h2>
             <form>
-                <label style={{ marginBottom: '10px' }}>Name:</label> {/* Update label to 'Name' */}
+                <label style={{ marginBottom: '10px' }}>Name:</label>
                 <input
                     type="text"
                     value={name}
-                    onChange={(e) => setName(e.target.value)} // Update to use 'name' instead of 'username'
+                    onChange={(e) => setName(e.target.value)}
                     style={{ marginBottom: '10px', padding: '5px' }}
                 />
 

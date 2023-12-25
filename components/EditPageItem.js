@@ -28,7 +28,7 @@ const EditPageItem = ({ selectedItem, closeModal, fetchPageItems }) => {
         try {
             await axios.put(`/api/page-items/${selectedItem.id}`, editedItem);
             closeModal();
-            fetchPageItems(); // Fetch updated items after submitting changes
+            fetchPageItems();
         } catch (error) {
             console.error('Error updating page item:', error);
         }
