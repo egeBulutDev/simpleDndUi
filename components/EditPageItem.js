@@ -13,7 +13,8 @@ import {
 } from '../styles/styles';
 
 const EditPageItem = ({ selectedItem, closeModal, fetchPageItems }) => {
-    const [editedItem, setEditedItem] = useState({ ...selectedItem }); // Copy selected item to editedItem state
+    const [editedItem, setEditedItem] = useState(selectedItem);
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;

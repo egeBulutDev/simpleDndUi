@@ -55,9 +55,11 @@ const PageItemList = () => {
         setSelectedItem(item);
     };
 
-    const handleEdit = () => {
+    const handleEdit = (item) => {
+        setSelectedItem(item);
         setEditMode(true);
     };
+
 
     const onDragEnd = (result) => {
         if (!result.destination) return;
@@ -74,8 +76,8 @@ const PageItemList = () => {
         try {
             await axios.post('/api/page-items/save-order', { order: itemOrder });
             // Fetch the updated items after saving the order
-            const response = await axios.get(`/api/page-items?page=${currentPage}`);
-            setItems(response.data.data);
+            /*const response = await axios.get(`/api/page-items?page=${currentPage}`);
+            setItems(response.data.data);*/
         } catch (error) {
             console.error('Error saving item order:', error);
         }
@@ -178,4 +180,4 @@ const PageItemList = () => {
     );
 };
 
-export default PageItemList;
+export default PageItemList
